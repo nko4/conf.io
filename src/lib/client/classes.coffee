@@ -52,10 +52,25 @@ class Transcript
     if Conf.user?.isPresenter then Conf.user.socket.emit "transcript-update", 
       transcript: @state
       room: Conf.room
+      language: ($ "#transcript .language").val()
 
     ($ "#transcript .target").html @state
   handleTranscriptionError: (error) =>
     console.log "speech capture error:", error
+  translate: (text, language_from=en, language_to=en) ->
+    data =
+        format: "html"
+        key: "AIzaSyD8s32cxuRLMljFmopvI0pr4OvoPGEiYRM"
+        prettyprint: yes
+        source: language_from
+        target: language_to
+        q: text
+
+    $.getJSON "https://www.googleapis.com/language/translate/v2", data, (response) ->
+      translation = response.data.translations[0].translatedText
+      console.log translation, data
+      ($ "#transcript .target").html translation
+
   capitalize: (string) =>
     capital= do (string.charAt 0).toUpperCase
     capital + string.substr 1

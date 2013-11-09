@@ -2,9 +2,9 @@ extends layout
 block content
   include ./header.jade
   div#app
-    div Conference ID: #{conferenceId}
-    include ./templates/transcript
-    include ./templates/video
+    div#speakers
+      include ./templates/video
+      include ./templates/transcript
     include ./templates/participants
   include ./templates/partials.html
   script(type='application/javascript', src='/vendor/firebase.js')

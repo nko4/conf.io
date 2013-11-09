@@ -25,7 +25,14 @@ bind = (socket) ->
       do Conf.user.transcript.capture
 
   socket.on "transcript-update", (data) ->
-    console.log "fuck you billy"
-    ($ "#transcript .target").html data.transcript
+    myLanguage = ($ "#transcript .language").val()
+    theirLanguage = data.language
+
+    if theirLanguage isnt myLanguage
+      # translate incoming text
+      classes.Transcript::translate data.transcript, theirLanguage, myLanguage
+        
+    else 
+      ($ "#transcript .target").html data.transcript
 
 module.exports = bind : bind

@@ -1,0 +1,95 @@
+/*
+** Conf.io - base.css
+** author: gordon hall
+*/
+
+html, body {
+	margin: 0;
+	padding: 0;
+	background: #00558c;
+}
+
+#app {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+#speakers {
+	position: fixed;
+	left: 0;
+}
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 88px;
+	z-index: 999;
+	background: #ffffff; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffffff 0%, #ffffff 87%, #d3d3d3 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(87%,#ffffff), color-stop(100%,#d3d3d3)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#ffffff 87%,#d3d3d3 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#ffffff 87%,#d3d3d3 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#ffffff 87%,#d3d3d3 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#ffffff 87%,#d3d3d3 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d3d3d3',GradientType=0 ); /* IE6-9 */
+}
+
+h1 {
+	font-family: "Pacifico", Helvetica, sans-serif;
+	font-size: 48px;
+	color: #9e005d;
+	margin: -2px 24px 0 24px;
+	float: left;
+}
+
+#vote {
+	float: right;
+	margin: 29px 24px;
+}
+
+#video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 50%;
+	width: 100%;
+}
+
+#participants {
+	background: #1a1a1a;
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: 270px;
+	z-index: 998;
+	overflow: auto;
+}
+
+#participants ul {
+	margin-top: 88px
+}
+
+.presenter.standalone {
+	margin: 64px auto;
+	display: block;
+	box-shadow: 0 0 26px #000;
+}
+
+#transcript {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	height: 50%;
+	width: 100%;
+}
+
+#transcript .target {
+	
+}

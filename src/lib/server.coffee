@@ -38,6 +38,4 @@ server.listen port, (err) ->
       process.setuid stats.uid
   console.log "Conf.io server running on port #{port}"
 # initialize socket.io
-io.listen server
-# bind socket listeners
-sockets io
+sockets io.listen server

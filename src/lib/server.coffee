@@ -7,14 +7,13 @@ server.coffee - starts application server
 
 nko              = require "nko", "MgCWyiZUBOtGD97E"
 fs               = require "fs"
-http             = require "http"
+{createServer}   = require "http"
 express          = require "express"
 io               = require "socket.io"
-coffeescript     = require "coffee-middleware"
 sockets          = require "./sockets"
 bindRoutes       = require "./routes"
 app              = express()
-server           = http.createServer app
+server           = createServer app
 isProduction     = process.env.NODE_ENV is "production"
 port             = if isProduction then 80 else 8000
 
@@ -26,13 +25,9 @@ app.configure ->
   app.set "view engine", "jade"
   app.use express.bodyParser()
   app.use express.methodOverride()
-  app.use coffeescript
-    src: __dirname + "/client"
-    dest: __dirname + "/../public/lib"
-    force: not isProduction
-  app.use express.static __dirname + "/../public"
+  app.use express.static "#{__dirname}/../public"
 # start server
-app.listen port, (err) ->
+server.listen port, (err) ->
   if err
     console.log err
     process.exit -1

@@ -1,17 +1,12 @@
-include ./header.jade
-//- ember templates
-include ./templates/transcipt.html
-include ./templates/video.html
-include ./templates/participants.html
-//- app view
-div Conference ID: #{conferenceId}
-script(type='text/x-handlebars')
-	div#app {{outlet}}
-script(type='application/javascript', src='/vendor/jquery-1.10.2.js')
-script(type='application/javascript', src='/vendor/handlebars-1.0.0.js')
-script(type='application/javascript', src='/vendor/ember-1.1.2.js')
-script(type='application/javascript', src='/lib/app.js')
-script(type='application/javascript', src='/lib/models.js')
-script(type='application/javascript', src='/lib/views.js')
-script(type='application/javascript', src='/lib/controllers.js')
-script(type='application/javascript', src='/lib/router.js')
+extends layout
+block content
+  include ./header.jade
+  div#app
+    div Conference ID: #{conferenceId}
+    include ./templates/transcript
+    include ./templates/video
+    include ./templates/participants
+  include ./templates/partials.html
+  script(type='application/javascript', src='/vendor/jquery-1.10.2.js')
+  script(type='application/javascript', src='/vendor/handlebars-1.0.0.js')
+  script(type='application/javascript', src='/lib/app.js')

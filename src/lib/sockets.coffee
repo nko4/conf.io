@@ -6,4 +6,5 @@ sockets.coffee - binds socket event listeners
 ###
 
 module.exports = (io) ->
-	true
+	
+	# do socket event listening here

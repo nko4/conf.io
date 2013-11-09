@@ -29,11 +29,15 @@ events.bind socket
     participants = ($ "#participants").width()
     winHeight    = ($ window).height()
     winWidth     = ($ window).width()
+    transcript   = ($ "#transcript").height()
+    transTools   = ($ "#transcript .tools").height()
 
     ($ "#speakers").css
       height: "#{winHeight - header}px"
       width: "#{winWidth - participants}px"
       top: "#{header}px"
+    ($ "#transcript .container").css
+      height: "#{transcript - transTools}px"
 
   ($ window).trigger "resize"
 

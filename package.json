@@ -1,17 +1,34 @@
 {
-  "name": "nko4-sporkydorky",
-  "version": "0.0.0",
-  "description": "sporkydorky",
-  "main": "server.js",
+  "name": "conf.io",
+  "version": "0.1.0",
+  "description": "real time conferences for everyone",
+  "author": {
+    "name": "Gordon Hall",
+    "email": "gordon@gordonwritescode.com"
+  },
+  "contributors": [
+    {
+      "name": "Billy Snyder",
+      "email": "bitpix3l@gmail.com"
+    }
+  ],
+  "main": "src/index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:nko4/sporkydorky.git"
   },
   "dependencies": {
-    "nko": "*"
+    "nko": "*",
+    "hat": "0.0.3",
+    "async": "~0.2.9",
+    "coffee-script": "~1.6.3",
+    "jade": "~0.35.0",
+    "socket.io": "~0.9.16",
+    "express": "~3.4.4",
+    "coffee-middleware": "~0.2.1"
   },
   "engines": {
     "node": "0.10.x"

@@ -1,0 +1,18 @@
+doctype 5
+html
+	head(lang='en-US')
+		title Conf.io | Real-Time Conferences for Everyone
+		//- stylesheets
+		link(rel='stylesheet', type='text/css', href='/styles/fonts.css')
+		link(rel='stylesheet', type='text/css', href='/styles/main.css')
+		link(rel='stylesheet', type='text/css', href='/styles/animate.min.css')
+		//- libraries
+		script(type='application/javascript', src='/socket.io/socket.io.js')
+		script(type='application/javascript', src='/vendor/jquery.js')	
+		if isProduction
+			include ./google-analytics.html
+		//- templates
+		include ./includes/templates.html
+	body
+		div#main
+			block content

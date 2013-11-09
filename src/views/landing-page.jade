@@ -1,3 +1,32 @@
-include ./header.jade
-div landing page
-include ./footer.jade
+extends layout
+block content
+  include ./header.jade
+  div#hero
+    h2
+      | Real Time <span>Conferences for</span> Everyone.
+    h2.strong Any Time. Any Place. Any Language.
+    div#join_or_host
+      input#room_id(type='text', placeholder='Enter an Existing Conference ID...')
+      button#join Join
+      span or 
+      button#host Create New Conference
+    div#active_conferences
+      h3 Browse Active Conferences
+      if rooms.length
+        ul
+          each room, i in rooms
+            li.room-item
+              span #{room.topic}
+              a(href='/conferences/#{room.id}') Join #{room.members.length} Others
+      else
+        div.oops There are no active conferences now. :(
+  div#features
+    div.constrain
+      ul.feature-list
+        li Translate speech to any Language
+        li Transcribe entire conference, using nothing but your voice
+        li Allow participants to have "the floor", adding their input to the transcription
+      ul.feature-list
+        li Copy and print transcriptions with the click of a button
+        li 
+  include ./footer.jade

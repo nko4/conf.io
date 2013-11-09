@@ -14,8 +14,10 @@ module.exports = (server) ->
 
   # render landing page
   server.get "/", (req, res) ->
+    room_manager = require "./room_manager"
     data = 
       isProduction: isProduction
+      rooms: room_manager.rooms
     res.render "landing-page", data
 
   # render application ui

@@ -23,7 +23,7 @@ events.bind socket
 # kick off stuff
 ($ document).ready ->
 
-  # adjust ui
+  # adjust ui proportions
   ($ window).resize (event) ->
     header       = ($ "header").height()
     participants = ($ "#participants").width()
@@ -38,8 +38,22 @@ events.bind socket
       top: "#{header}px"
     ($ "#transcript .container").css
       height: "#{transcript - transTools}px"
-
+  # forse adjustment on load
   ($ window).trigger "resize"
+
+  # toolbar bindings
+  transcriptTarget = ($ "#transcript .container .target")
+  fontInc          = ($ ".tools button.font-inc")
+  fontDec          = ($ ".tools button.font-dec")
+  print            = ($ ".tools button.print")
+
+  fontInc.bind "click", ->
+    currentFontSize = transcriptTarget.css "font-size"
+    transcriptTarget.css "font-size", "#{(parseInt currentFontSize) + 1}px"
+  fontDec.bind "click", ->
+    currentFontSize = transcriptTarget.css "font-size"
+    transcriptTarget.css "font-size", "#{(parseInt currentFontSize) - 1}px"
+  print.bind "click", -> do window.print
 
   Conf.room = (location.pathname.split "/")[2]
   socket.emit "requested-join", 

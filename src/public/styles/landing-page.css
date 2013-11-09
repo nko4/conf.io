@@ -1,0 +1,112 @@
+/*
+** Conf.io - landing-page.css
+** author: gordon hall
+*/
+
+#hero {
+	background: #00698c;
+	background-image: url("/assets/images/zenbg-1.png"), url("/assets/images/zenbg-2.png");
+	background-repeat: repeat-x, repeat;
+	overflow: hidden;
+	margin-top: 88px;
+	border-bottom: 4px solid #fff;
+	padding-top: 18px;
+}
+
+h2 {
+	color: #fff;
+	font-size: 38px;
+	margin: 12px 0 0 0;
+	text-align: center;
+	font-weight: normal;
+}
+
+h2.strong {
+	font-weight: bold;
+	font-size: 42px;
+}
+
+h2 span {
+	font-weight: normal !important;
+}
+
+#join_or_host {
+	width: 960px;
+	text-align: center;
+	margin: 24px auto;
+}
+
+#room_id {
+	padding: 12px 24px;
+	background: #b3b3b3;
+	font-size: 22px;
+	border: none;
+	border-radius: 4px;
+	width: 442px;
+	margin: 0 24px 0 0;
+}
+
+::-webkit-input-placeholder {
+    color: #737373;
+    font-style: italic;
+}
+#room_id:focus {
+	background: #fff;
+}
+
+#join_or_host span {
+	color: #fff;
+	font-weight: bold;
+	display: inline-block;
+	margin: 12px;
+	text-transform: uppercase;
+}
+
+#join_or_host button {
+	background: #ffffff;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+	color: #9e005d;
+	border: none;
+	padding: 6px 16px;
+	font-size: 18px;
+	border-radius: 4px;
+	font-family: Raleway;
+}
+
+#join_or_host button:hover {
+	cursor: pointer;
+	background: #fff;
+}
+
+.constrain {
+	width: 960px;
+	margin: auto;
+	overflow: hidden;
+}
+
+#features {
+	background: #333333;
+	background-image: url("/assets/images/zenbg-gray.png");
+	overflow: hidden;
+	padding: 0;
+}
+
+#features .feature-list {
+	color: #fff;
+	list-style-type: square;
+	float: left;
+	width: 432px;
+	padding-left: 0;
+	margin: 24px;
+}
+
+.feature-list li {
+	margin: 16px 0;
+	font-size: 16px;
+}

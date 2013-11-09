@@ -1,0 +1,16 @@
+@media print {
+
+	#speakers,
+	#video,
+	#participants,
+	.language
+	.tools {
+		display: none;
+	}
+
+	#transcript .container {
+		height: auto !important;
+		overflow: visible;
+		font-family: Georgia, Times, serif
+	}
+}

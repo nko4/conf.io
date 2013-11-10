@@ -105,13 +105,14 @@ class AVStream
       audio: yes
       video: yes
       broadcast: yes
-    @connection.direction     = "one-to-many"
+    @connection.direction     = "one-way"
     @connection.onstream      = @connect
     @connection.onstreamended = @disconnect
     do @connection.connect
     console.log @connection
   connect: (stream) =>
     console.log "Got stream:", stream.streamid
+    console.log stream.type
     if stream.type is "local"
       if Conf.user?.isPresenter
         ($ "#video .presenter").attr "src", stream.blobURL

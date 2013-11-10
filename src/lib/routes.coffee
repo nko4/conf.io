@@ -23,10 +23,12 @@ module.exports = (server) ->
       for key, val of topics[room]
         roomTopic = val.topic
         members++
-      parsedTopics.push 
-        topic: roomTopic
-        members: members
-        id: room
+
+      if room
+        parsedTopics.push 
+          topic: roomTopic
+          members: members
+          id: room
 
     console.log parsedTopics
     data = 

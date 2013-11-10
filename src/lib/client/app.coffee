@@ -101,6 +101,11 @@ Conf.join = (data) -> socket.emit "requested-join", data
   fontDec.bind "click", ->
     currentFontSize = transcriptTarget.css "font-size"
     transcriptTarget.css "font-size", "#{(parseInt currentFontSize) - 1}px"
-  print.bind "click", -> do window.print
+  print.bind "click", -> 
+    print_window = do window.open
+    transcript   = ($ "#transcript .target").html()
+    ($ print_window.document.body).html transcript
+    ($ "body .question", print_window)
+    do print_window.print
 
   if not Conf.user?.isPresenter then do Conf.showJoinDialog

@@ -27,7 +27,7 @@ class Transcript
     @recognition.onend          = @speechOff
   capture: ->
     @transcript = ""
-    @recognition.lang = "en-US"
+    @recognition.lang = (($ ".language").val()?.split "-")[0] or "en-US"
     do @recognition.start
     ($ ".speech-toggle").show()
   speechOn: ->

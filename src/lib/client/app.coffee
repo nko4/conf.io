@@ -13,12 +13,29 @@ currentUser = localStorage.getItem "user-uuid"
 module.exports = window.Conf = Conf = {}
 
 # create a new uuid for user if it doesn't already exist
-unless currentUser
-  localStorage.setItem "user-uuid", do (new classes.UUID().toString)
+unless currentUser 
+  currentUser = do (new classes.UUID().toString)
+  localStorage.setItem "user-uuid", currentUser
 
 # instantiate socket connection
 socket = io.connect location.origin
 events.bind socket
+
+Conf.showJoinDialog = ->
+  ($ "#main").addClass "grayscale"
+  ($ "#join_dialog").show().unbind('submit').bind "submit", (e) ->
+    do e.preventDefault
+    ($ "#main").removeClass "grayscale"
+    ($ "#join_dialog").hide()
+
+    Conf.join  
+      uuid: currentUser
+      room: Conf.room
+      username: ($ "#username").val() or "anonymous"
+      topic: ($ "#topic").val() or "Not Specified"
+      email: ($ "#email").val() or null
+
+Conf.join = (data) -> socket.emit "requested-join", data
 
 # kick off stuff
 ($ document).ready ->
@@ -56,7 +73,4 @@ events.bind socket
   print.bind "click", -> do window.print
 
   Conf.room = (location.pathname.split "/")[2]
-  socket.emit "requested-join", 
-    uuid: currentUser
-    room: Conf.room
-
+  if not Conf.user?.isPresenter then do Conf.showJoinDialog

@@ -65,6 +65,12 @@ h6 {
 	font-weight: normal;
 }
 
+footer {
+	text-align: center;
+	margin: 12px 0;
+	font-size: 14px;
+}
+
 #vote {
 	float: right;
 	margin: 29px 24px;
@@ -192,4 +198,70 @@ button.print {
 	margin: 24px;
 	font-size: 15px;
 	line-height: 24px;
+}
+
+#join_dialog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	display: none;
+}
+
+#join_dialog form {
+	width: 400px;
+	height: 258px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -129px 0 0 -200px;
+	background: rgba(158,0,93,0.82);
+	box-shadow: 0px 0px 18px #000;
+}
+
+#join_dialog label {
+	display: block;
+	margin: 12px 24px;
+	color: #fff;
+}
+
+#join_dialog label span {
+	width: 100px;
+	display: block;
+	float: left;
+	font-size: 18px;
+	margin: 2px 0;
+}
+
+#join_dialog input {
+	border: none;
+	padding: 4px 12px;
+	width: 220px;
+	opacity: 0.8;
+}
+
+#submit_join_request {
+	background: #ffffff;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+	color: #9e005d;
+	border: none;
+	padding: 6px 16px;
+	font-size: 18px;
+	border-radius: 4px;
+	font-family: Raleway;
+	margin: 24px auto;
+	display: block;
+}
+
+#submit_join_request:hover {
+	cursor: pointer;
+	background: #fff;
 }

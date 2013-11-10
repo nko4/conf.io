@@ -110,3 +110,54 @@ h2 span {
 	margin: 16px 0;
 	font-size: 16px;
 }
+
+#active_conferences {
+	color: #fff;
+}
+
+#active_conferences h3 {
+	background: rgba(0,0,0,0.4);
+	padding: 12px 24px;
+	font-size: 22px;
+	margin: 0;
+}
+
+#active_conferences ul {
+	padding: 0;
+	margin: 0 0 24px 0;
+}
+
+#active_conferences ul li {
+	padding: 8px 24px;
+}
+
+#active_conferences ul li span {
+	font-size: 18px;
+	margin: 4px 0
+}
+
+#active_conferences ul li a {
+	display: inline-block;
+	color: #93005d;
+	background: rgba(255,255,255,0.8);
+	border: none;
+	text-decoration: none;
+	border-radius: 3px;
+	float: right;
+	padding: 4px 8px;
+	font-size: 12px;
+}
+
+#active_conferences ul li a:hover {
+	background: #fff;
+}
+
+#active_conferences ul li:nth-child(even) {
+	background: rgba(0,0,0,0.4);
+}
+
+#active_conferences .oops {
+	margin: 24px;
+	font-style: italic;
+	text-align: center;
+}

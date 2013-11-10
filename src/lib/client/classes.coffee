@@ -108,7 +108,7 @@ class User
   constructor: (opts) ->
     @uuid       = opts.userId
     @socket     = opts.socket
-    @stream   = opts.stream
+    @stream     = opts.stream
     @transcript = opts.transcript
     
 

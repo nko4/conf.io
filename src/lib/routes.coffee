@@ -8,13 +8,13 @@ routes.coffee - binds application routes
 isProduction = process.env.NODE_ENV is "production"
 browserify   = require "browserify"
 coffeeify    = require "coffeeify"
+room_manager = require "./room_manager"
 bundle       = null
 
 module.exports = (server) ->
 
   # render landing page
   server.get "/", (req, res) ->
-    room_manager = require "./room_manager"
     data = 
       isProduction: isProduction
       rooms: room_manager.rooms

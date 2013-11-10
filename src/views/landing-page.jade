@@ -10,23 +10,38 @@ block content
       button#join Join
       span or 
       button#host Create New Conference
-    div#active_conferences
+    div#active_conferences.constrain
       h3 Browse Active Conferences
       if rooms.length
         ul
           each room, i in rooms
             li.room-item
               span #{room.topic}
-              a(href='/conferences/#{room.id}') Join #{room.members.length} Others
+              a(href='/conferences/#{room.id}') Join #{room.members} Others
       else
-        div.oops There are no active conferences now. :(
+        //- div.oops Sorry, there are no active conferences now.
+        ul
+          li.room-item
+            span NodeKnockout Support Group
+            a(href='#') Join 12 Others
+          li.room-item
+            span CoffeeScript and it's "Cuteness"
+            a(href='#') Join 65 Others
+          li.room-item
+            span Ways to not fall asleep
+            a(href='#') Join 404 Others
+          li.room-item
+            span Node.js Tip and Tricks
+            a(href='#') Join 2 Others
+          li.room-item
+            span What is Open Source and Why do I feel so Guilty all of the time?
+            a(href='#') Join 32 Others
   div#features
     div.constrain
       ul.feature-list
-        li Translate speech to any Language
+        li Translate speech to any language
         li Transcribe entire conference, using nothing but your voice
-        li Allow participants to have "the floor", adding their input to the transcription
       ul.feature-list
+        li Give participants "the floor" to add their input to the transcript
         li Copy and print transcriptions with the click of a button
-        li 
   include ./footer.jade

@@ -2,7 +2,7 @@ extends layout
 block content
   include ./header.jade
   script(type='text/javascript', src='/vendor/jquery-1.10.2.js')
-  script(type='text/javascript')
+  script(type='text/javascript').
     function randomRoomName() {
       var text = "";
       var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -39,30 +39,15 @@ block content
       button#host Create New Conference
     div#active_conferences.constrain
       h3 Browse Active Conferences
-      if rooms.length
+      if topics.length
         ul
-          each room, i in rooms
-            li.room-item
-              span #{room.topic}
-              a(href='/conferences/#{room.id}') Join #{room.members} Others
+          each room, i in topics
+            if room.topic
+              li.room-item
+                span #{room.topic}
+                a(href='/conferences/#{room.id}') Join #{room.members} Others
       else
-        //- div.oops Sorry, there are no active conferences now.
-        ul
-          li.room-item
-            span NodeKnockout Support Group
-            a(href='#') Join 12 Others
-          li.room-item
-            span CoffeeScript and it's "Cuteness"
-            a(href='#') Join 65 Others
-          li.room-item
-            span Ways to not fall asleep
-            a(href='#') Join 404 Others
-          li.room-item
-            span Node.js Tip and Tricks
-            a(href='#') Join 2 Others
-          li.room-item
-            span What is Open Source and Why do I feel so Guilty all of the time?
-            a(href='#') Join 32 Others
+        div.oops Sorry, there are no active conferences now.
   div#features
     div.constrain
       ul.feature-list

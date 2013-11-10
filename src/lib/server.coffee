@@ -25,6 +25,7 @@ app.configure ->
   app.set "view engine", "jade"
   app.use express.bodyParser()
   app.use express.methodOverride()
+  app.use express.favicon "#{__dirname}/../public/favicon.png"
   app.use express.static "#{__dirname}/../public"
 # start server
 server.listen port, (err) ->
@@ -33,9 +34,9 @@ server.listen port, (err) ->
     process.exit -1
   # if run as root, downgrade to the owner of this file
   if process.getUid is 0
-    fs.stat __filsname, (err, stats) ->
+    fs.stat __filename, (err, stats) ->
       if err then return console.error err
       process.setuid stats.uid
   console.log "Conf.io server running on port #{port}"
 # initialize socket.io
-sockets io.listen server
+topics = sockets io.listen server

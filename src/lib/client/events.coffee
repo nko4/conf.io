@@ -20,7 +20,7 @@ bind = (socket) ->
       username: data.username
 
     # open stream to other is presenter
-    Conf.user.isPresenter = data.isPresenter
+    Conf.user.isPresenter = data.event.isPresenter
     if Conf.user.isPresenter 
       do Conf.user.stream.open
       do Conf.user.transcript.capture
@@ -62,5 +62,23 @@ bind = (socket) ->
     if topic
       ($ "#transcript .conference-title").html topic
       ($ "#topic").val(topic).attr "disabled", "disabled"
+
+  socket.on "hand-raise", (data) ->
+    id  = data.id
+    src = data.src
+    console.log "hand raised!", data
+    ($ "[data-id='#{id}']").addClass "handRaised"
+    ($ "[data-id='#{id}']").data "videoSrc", src
+
+  socket.on "floor-received", (data) ->
+    console.log "floor is being given to #{data.id}"
+    ($ "[data-id='#{data.id}']").removeClass "handRaised"
+    if Conf.user?.socket.socket.sessionid is data.id
+      # here, show user a prompt to type a question
+      # then listen for finished event and emit to all users
+      # the question bubble
+      console.log "thing"
+
+
 
 module.exports = bind : bind

@@ -88,7 +88,8 @@ footer {
 }
 
 #participants {
-	background: #1a1a1a;
+	background: #333333;
+	background-image: url("/assets/images/zenbg-gray.png");
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -96,6 +97,7 @@ footer {
 	width: 270px;
 	z-index: 998;
 	overflow: auto;
+	box-shadow: inset 12px 0 22px #000;
 }
 
 #participants ul {
@@ -115,6 +117,15 @@ footer {
 #participants li {
 	border-top: 1px solid rgba(255,255,255,0.2);
 	overflow: hidden;
+}
+
+#participants li.handRaised {
+	background: url('/assets/images/hand.png') right center no-repeat;
+}
+
+#participants li.handRaised:hover {
+	background-color: #000;
+	cursor: pointer;
 }
 
 #participants li img {
@@ -158,6 +169,9 @@ footer {
 	margin: 0 3% 0 0;
 	font-size: 12px;
 	padding: 6px 8px;
+	-webkit-appearance: none;
+	background: url('/assets/images/down-arrow.png') 94%% center no-repeat #fff;
+	border: 1px solid #e2e2e2;
 }
 
 #transcript .conference-title {

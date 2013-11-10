@@ -7,11 +7,12 @@ sockets.coffee - binds socket event listeners
 
 gravatar = require "./gravatar"
 
+participants = {}
+topics       = {}
+
 module.exports = (io) ->
-  rooms        = io.sockets.manager.rooms
-  participants = {}
-  topics       = {}
-  
+  rooms        = io.sockets.manager.rooms  
+
   io.sockets.on "connection", (socket) ->
     id           = socket.id
     room         = null
@@ -62,9 +63,28 @@ module.exports = (io) ->
     socket.on "transcript-update", (data) ->
       (socket.broadcast.to data.room).emit "transcript-update", data      
 
+    socket.on "floor-requested", (data) ->
+      id = data.id
+      console.log "floor-requested:#{id}"
+      socket.emit "hand-raise", 
+        id: id
+      (socket.broadcast.to data.room).emit "hand-raise", 
+        id: id
+
+    socket.on "give-floor", (data) ->
+      id = data.id
+      console.log "giving floor to: #{id}"
+      socket.emit "floor-received", 
+        id: id
+      (socket.broadcast.to data.room).emit "floor-received", 
+        id: id
+
     socket.on "disconnect", ->
       console.log room
       if room 
         delete participants[room]?[socket.id]
         (socket.broadcast.to room).emit "participant-left", 
           socket: socket.id
+
+module.exports.topics = topics
+module.exports.topics = participants

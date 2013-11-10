@@ -46,6 +46,14 @@ Conf.join = (data) -> socket.emit "requested-join", data
 # kick off stuff
 ($ document).ready ->
 
+  # bind hand raising acceptance
+  ($ document).on "click", ".handRaised", (e) ->
+    socketId = ($ @).attr "data-id"
+    videoSrc = ($ @).data "videoSrc"
+    Conf.user?.socket.emit "give-floor", 
+      id: socketId,
+      src: videoSrc
+
   # adjust ui proportions
   ($ window).resize (event) ->
     header       = ($ "header").height()

@@ -86,23 +86,30 @@ class AVStream
       audio: yes
       video: yes
       broadcast: yes
-    @connection.direction     = "many-to-many"
+    @connection.direction     = "one-way"
     @connection.onstream      = @connect
     @connection.onstreamended = @disconnect
     do @connection.connect
     console.log @connection
-  connect: (stream) ->
+  connect: (stream) =>
     console.log "Got stream:", stream.streamid
     if stream.type is "local"
-      if Conf.user?.isPresenter then ($ "#video .presenter").attr "src", stream.blobURL
+      if Conf.user?.isPresenter
+        ($ "#video .presenter").attr "src", stream.blobURL
+        ($ "#video .presenter").prop "muted", true
+      # else
+      #   ($ "#video .participant").attr "src", stream.blobURL
     if stream.type is "remote" and !Conf.user.isPresenter
-      ($ "#video .presenter").attr "src", stream.mediaElement.src
+      unless @remoteStreamActive
+        ($ "#video .presenter").attr "src", stream.mediaElement.src
+        @remoteStreamActive = yes
   disconnect: (stream) =>
     videoElement   = stream.mediaElement
     videoContainer = stream.mediaElement.parentNode
     if videoContainer then videoContainer.removeChild videoElement
   open: -> 
-    do @connection.open
+    do @connection.open if Conf.user.isPresenter
+  remoteStreamActive: no
 
 class User
   constructor: (opts) ->
@@ -110,7 +117,25 @@ class User
     @socket     = opts.socket
     @stream     = opts.stream
     @transcript = opts.transcript
-    
+  giveFloor: ->
+    # this should be called by socket event when 
+    # presenter gives user the floor
+    @stream.connection.session.video = yes
+    @stream.connection.session.audio = yes
+    ($ "#video .participant").attr "src", stream.mediaElement.src
+    ($ "#video .participant").show()
+    ($ "#video .presenter").removeClass "standalone"
+    if Conf.activeParticipant then do Conf.activeParticipant.revokeFloor
+  revokeFloor: ->
+    @stream.connection.session.video = no
+    @stream.connection.session.audio = no
+    ($ "#video .participant").attr "src", ""
+    ($ "#video .participant").hide()
+    ($ "#video .presenter").addClass "standalone"
+  raiseHand: ->
+    console.log "requesting floor", @socket
+    @socket.emit "floor-requested", 
+      id: @socket.socket.sessionid
 
 # expose classes
 module.exports =

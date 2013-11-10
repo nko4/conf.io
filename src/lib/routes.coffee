@@ -8,16 +8,30 @@ routes.coffee - binds application routes
 isProduction = process.env.NODE_ENV is "production"
 browserify   = require "browserify"
 coffeeify    = require "coffeeify"
-room_manager = require "./room_manager"
 bundle       = null
+topics       = (require "./sockets").topics
+participants = (require "./sockets").participants
 
 module.exports = (server) ->
 
   # render landing page
   server.get "/", (req, res) ->
+    parsedTopics = []
+    for room, topic of topics
+      roomTopic = ""
+      members   = 0
+      for key, val of topics[room]
+        roomTopic = val.topic
+        members++
+      parsedTopics.push 
+        topic: roomTopic
+        members: members
+        id: room
+
+    console.log parsedTopics
     data = 
       isProduction: isProduction
-      rooms: room_manager.rooms
+      topics: parsedTopics
     res.render "landing-page", data
 
   # render application ui

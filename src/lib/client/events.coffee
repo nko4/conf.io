@@ -46,13 +46,14 @@ bind = (socket) ->
   socket.on "transcript-update", (data) ->
     myLanguage = ($ "#transcript .language").val()
     theirLanguage = data.language
-
+    console.log data.transcript
     if theirLanguage isnt myLanguage
       # translate incoming text
       classes.Transcript::translate data.transcript, theirLanguage, myLanguage
     else 
       ($ "#transcript .target").html data.transcript
-
+    ($ window).trigger "resize"
+    
   socket.on "participant-left", (data) ->
     console.log "LEFT:", data
     ($ "#participants [data-id=#{data?.socket}]").remove()

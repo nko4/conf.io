@@ -15,8 +15,15 @@ block content
 
     $(document).ready(function(e) {
 
-       $("#join").bind("click", function(e) {
+      var chrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
+      if (!chrome) {
+        $('#main').addClass('grayscale');
+        $('.block-ui').show();
+      }
+
+      $("#join").bind("click", function(e) {
         e.preventDefault()
+        if (!$('#room_id').val()) return $("#host").trigger('click')
         conferenceName = $('#room_id').val()
         location.href = "/conferences/" + conferenceName
       });

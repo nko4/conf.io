@@ -46,6 +46,12 @@ Conf.join = (data) -> socket.emit "requested-join", data
 # kick off stuff
 ($ document).ready ->
 
+  # check to makes sure we are using chrome
+  chrome = /chrom(e|ium)/.test navigator.userAgent.toLowerCase()
+  if not chrome
+    ($ "#main").addClass "grayscale"
+    ($ ".block-ui").show()
+
   # bind hand raising acceptance
   ($ document).on "click", ".handRaised", (e) ->
     socketId = ($ @).attr "data-id"

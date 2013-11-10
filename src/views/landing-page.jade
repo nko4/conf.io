@@ -1,6 +1,33 @@
 extends layout
 block content
   include ./header.jade
+  script(type='text/javascript', src='/vendor/jquery-1.10.2.js')
+  script(type='text/javascript')
+    function randomRoomName() {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+      for( var i=0; i < 10; i++ )
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      return text;
+    };
+
+    $(document).ready(function(e) {
+
+       $("#join").bind("click", function(e) {
+        e.preventDefault()
+        conferenceName = $('#room_id').val()
+        location.href = "/conferences/" + conferenceName
+      });
+
+      $("#host").bind("click", function(e) {
+        e.preventDefault()
+        conferenceName = randomRoomName()
+        location.href = "/conferences/" + conferenceName
+      });
+
+    });
   div#hero
     h2
       | Real Time <span>Conferences for</span> Everyone.

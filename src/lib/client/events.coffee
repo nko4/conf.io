@@ -27,12 +27,21 @@ bind = (socket) ->
 
     console.log "joined: (presenter)", data
     template = Handlebars.compile ($ "[data-template-name='participant-list']").html()
-    ($ "#participants .presenter").html template data
+    ($ "#participants .presenter").html template data.event
+    console.log "PARTICIPANTS!!", data.participants
+    for id, participant of data.participants
+      console.log "getting participants (i joined)", participant
+      if not ($ "[data-id='#{id}']").length
+        ($ "#participants .participants").append template participant
 
   socket.on "participant-joined", (data) ->
-    console.log "joined: (participant)", data
+    console.log "joined: (participant)", data.event
     template = Handlebars.compile ($ "[data-template-name='participant-list']").html()
-    ($ "#participants .participants").append template data
+    ($ "#participants .participants").append template data.event
+    for id, participant of data.participants
+      console.log "getting participants (they joined)", participant
+      if not ($ "[data-id='#{id}']").length
+        ($ "#participants .participants").append template participant
 
   socket.on "transcript-update", (data) ->
     myLanguage = ($ "#transcript .language").val()
@@ -46,6 +55,12 @@ bind = (socket) ->
 
   socket.on "participant-left", (data) ->
     console.log "LEFT:", data
-    ($ "#participants [data-id=#{data.socket}]").remove()
+    ($ "#participants [data-id=#{data?.socket}]").remove()
+
+  socket.on "got-topic", (data) ->
+    topic = data.topic
+    if topic
+      ($ "#transcript .conference-title").html topic
+      ($ "#topic").val(topic).attr "disabled", "disabled"
 
 module.exports = bind : bind

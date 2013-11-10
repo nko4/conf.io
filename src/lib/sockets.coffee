@@ -8,11 +8,18 @@ sockets.coffee - binds socket event listeners
 gravatar = require "./gravatar"
 
 module.exports = (io) ->
-  rooms = io.sockets.manager.rooms
+  rooms        = io.sockets.manager.rooms
+  participants = {}
+  topics       = {}
   
   io.sockets.on "connection", (socket) ->
-    id   = socket.id
-    room = null
+    id           = socket.id
+    room         = null
+
+    socket.on "joined-room", (data) ->
+      room = data.room
+      if room then socket.emit "got-topic", topic: topics[room]
+
     # user role is unknown - if they are the first to
     # join, then they are the presenter else a participant
     socket.on "requested-join", (data) ->
@@ -32,12 +39,32 @@ module.exports = (io) ->
         gravatar: gravatar data.email or ""
         socket: socket.id
 
-      socket.emit "joined-conference", eventData
-      (socket.broadcast.to data.room).emit "participant-joined", eventData
+      if eventData.isPresenter then topics[room] = data.topic
+      # send conf topic over
+      if topics[data.room]
+        socket.emit "got-topic", 
+          topic: topics[data.room]
+
+      if not participants[data.room] then participants[data.room] = {}
+      participants[data.room][socket.id] = eventData
+
+      console.log participants[socket.id]
+
+      socket.emit "joined-conference", 
+        event: participants[room][socket.id]
+        participants: participants[room]
+        topic: topics[data.room]
+
+      (socket.broadcast.to data.room).emit "participant-joined", 
+        event: participants[room][socket.id]
+        participants: participants[room]
 
     socket.on "transcript-update", (data) ->
-      (socket.broadcast.to data.room).emit "transcript-update", data
+      (socket.broadcast.to data.room).emit "transcript-update", data      
 
     socket.on "disconnect", ->
-      (socket.broadcast.to room).emit "participant-left", 
-        socket: socket.id
+      console.log room
+      if room 
+        delete participants[room]?[socket.id]
+        (socket.broadcast.to room).emit "participant-left", 
+          socket: socket.id

@@ -99,7 +99,34 @@ footer {
 }
 
 #participants ul {
-	margin-top: 88px
+	padding: 0;
+	list-style-type: none;
+	margin-bottom: 0;
+}
+
+#participants ul:first-of-type {
+	margin-top: 87px;
+}
+
+#participants ul.participants {
+	margin-top: 0;
+}
+
+#participants li {
+	border-top: 1px solid rgba(255,255,255,0.2);
+	overflow: hidden;
+}
+
+#participants li img {
+	float: left;
+	margin: 12px;
+}
+
+#participants li .user-name {
+	color: #fff;
+	font-family: Raleway, Helvetica, sans-serif;
+	float: left;
+	margin: 18px 0;
 }
 
 .presenter.standalone {

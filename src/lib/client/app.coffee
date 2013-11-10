@@ -12,6 +12,9 @@ currentUser = localStorage.getItem "user-uuid"
 # instantiate ember application
 module.exports = window.Conf = Conf = {}
 
+# set room name
+Conf.room = (location.pathname.split "/")[2]
+
 # create a new uuid for user if it doesn't already exist
 unless currentUser 
   currentUser = do (new classes.UUID().toString)
@@ -23,6 +26,9 @@ events.bind socket
 
 Conf.showJoinDialog = ->
   ($ "#main").addClass "grayscale"
+
+  socket.emit "joined-room", room: Conf.room
+
   ($ "#join_dialog").show().unbind('submit').bind "submit", (e) ->
     do e.preventDefault
     ($ "#main").removeClass "grayscale"
@@ -72,5 +78,4 @@ Conf.join = (data) -> socket.emit "requested-join", data
     transcriptTarget.css "font-size", "#{(parseInt currentFontSize) - 1}px"
   print.bind "click", -> do window.print
 
-  Conf.room = (location.pathname.split "/")[2]
   if not Conf.user?.isPresenter then do Conf.showJoinDialog

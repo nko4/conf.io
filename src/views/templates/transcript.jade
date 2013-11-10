@@ -66,7 +66,13 @@ div#transcript
 			option(value='cy') Welsh
 			option(value='yi') Yiddish
 		h2.conference-title Getting Conference Details...
+		div#ask
+			form.send-question
+				textarea(placeholder='Type a question to add to the presenter\'s anwering queue...')
+				button(type='submit') Ask
 		ul.tools
+			li
+				button.ask-question Ask Question
 			li
 				button.font-inc Increase Font
 			li
@@ -74,4 +80,5 @@ div#transcript
 			li
 				button.print Print Transcript 
 	div.container
+		button.speech-toggle Toggle Speech Recognition
 		div.target

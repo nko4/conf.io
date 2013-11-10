@@ -52,13 +52,24 @@ Conf.join = (data) -> socket.emit "requested-join", data
     ($ "#main").addClass "grayscale"
     ($ ".block-ui").show()
 
-  # bind hand raising acceptance
-  ($ document).on "click", ".handRaised", (e) ->
-    socketId = ($ @).attr "data-id"
-    videoSrc = ($ @).data "videoSrc"
-    Conf.user?.socket.emit "give-floor", 
-      id: socketId,
-      src: videoSrc
+  ($ "body").bind "click", -> ($ "#ask").fadeOut "fast"
+  # bind hand raise request
+  ($ ".ask-question").bind "click", (e) -> 
+    e.stopPropagation()
+    ($ "#ask").fadeIn "fast"
+  ($ ".send-question").bind "click", (e) -> e.stopPropagation()
+  ($ ".send-question").bind "submit", (e) -> 
+    e.preventDefault()
+    console.log "sending question..."
+    questionText = ($ "textarea", @).val()
+    Conf.user?.raiseHand questionText
+    ($ "textarea", @).val ""
+    ($ @).parent().fadeOut "fast"
+
+  ($ ".speech-toggle").bind "click", ->
+    if Conf.user?.isPresenter
+      if ($ @).hasClass "on" then do Conf.user?.transcript?.recognition.stop
+      else if ($ @).hasClass "off" then do Conf.user?.transcript?.recognition.start
 
   # adjust ui proportions
   ($ window).resize (event) ->

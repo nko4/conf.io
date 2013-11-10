@@ -64,20 +64,25 @@ module.exports = (io) ->
       (socket.broadcast.to data.room).emit "transcript-update", data      
 
     socket.on "floor-requested", (data) ->
-      id = data.id
+      id       = data.id
+      question = data.question
       console.log "floor-requested:#{id}"
       socket.emit "hand-raise", 
-        id: id
+        id: id,
+        question: question
       (socket.broadcast.to data.room).emit "hand-raise", 
-        id: id
+        id: id,
+        question: question
 
     socket.on "give-floor", (data) ->
       id = data.id
       console.log "giving floor to: #{id}"
       socket.emit "floor-received", 
-        id: id
+        id: id,
+        question: data.question
       (socket.broadcast.to data.room).emit "floor-received", 
-        id: id
+        id: id,
+        question: data.question
 
     socket.on "disconnect", ->
       console.log room

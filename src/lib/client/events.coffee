@@ -24,6 +24,10 @@ bind = (socket) ->
     if Conf.user.isPresenter 
       do Conf.user.stream.open
       do Conf.user.transcript.capture
+      ($ ".ask-question").hide()
+    else
+      do Conf.user.stream.open
+      ($ ".speech-toggle").hide()
 
     console.log "joined: (presenter)", data
     template = Handlebars.compile ($ "[data-template-name='participant-list']").html()
@@ -46,7 +50,6 @@ bind = (socket) ->
   socket.on "transcript-update", (data) ->
     myLanguage = ($ "#transcript .language").val()
     theirLanguage = data.language
-    console.log data.transcript
     if theirLanguage isnt myLanguage
       # translate incoming text
       classes.Transcript::translate data.transcript, theirLanguage, myLanguage
@@ -65,20 +68,28 @@ bind = (socket) ->
       ($ "#topic").val(topic).attr "disabled", "disabled"
 
   socket.on "hand-raise", (data) ->
-    id  = data.id
-    src = data.src
-    console.log "hand raised!", data
-    ($ "[data-id='#{id}']").addClass "handRaised"
-    ($ "[data-id='#{id}']").data "videoSrc", src
+    id       = data.id
+    question = data.question
+    asker    = ($ "[data-id='#{id}']").addClass "handRaised"
+    # bind hand raising acceptance
+    asker.unbind "click"
+    asker.bind "click", (e) ->
+      socketId = ($ @).attr "data-id"
+      if Conf.user?.isPresenter
+        Conf.user?.socket.emit "give-floor", 
+          id: socketId,
+          question: question
 
   socket.on "floor-received", (data) ->
     console.log "floor is being given to #{data.id}"
     ($ "[data-id='#{data.id}']").removeClass "handRaised"
-    if Conf.user?.socket.socket.sessionid is data.id
-      # here, show user a prompt to type a question
-      # then listen for finished event and emit to all users
-      # the question bubble
-      console.log "thing"
+    if Conf.user?.isPresenter
+      # add the question text to the presenters transcript
+      # it should emit and translate automatically?
+      question = data.question
+      username = ($ "[data-id='#{data.id}'] .user-name").html()
+      Conf.user.transcript.insertQuestion username, question
+      
 
 
 

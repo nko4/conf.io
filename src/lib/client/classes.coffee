@@ -29,11 +29,21 @@ class Transcript
     @transcript = ""
     @recognition.lang = "en-US"
     do @recognition.start
+    ($ ".speech-toggle").show()
   speechOn: ->
     console.log "speech capture on"
+    ($ ".speech-toggle").removeClass "off"
+    ($ ".speech-toggle").addClass "on"
   speechOff: ->
     console.log "speech capture off"
+    ($ ".speech-toggle").removeClass "on"
+    ($ ".speech-toggle").addClass "off"
   transcribe: (event) ->
+    # show indicator
+    clearTimeout Conf.user.isSpeaking
+    ($ ".speech-toggle").addClass "speaking"
+    Conf.user.isSpeaking = setTimeout -> ($ ".speech-toggle").removeClass "speaking", 1000
+
     interimTranscript = ""
     currentIndex      = event.resultIndex
     results           = Array::slice.call event.results, currentIndex
@@ -48,15 +58,24 @@ class Transcript
     @transcript       = "#{@capitalize @transcript}"
     @state            = "#{@transcript}<em>#{interimTranscript}</em>"
 
+    # inform clients of transcription
+    do @emit
+
+    ($ "#transcript .target").html @state
+  handleTranscriptionError: (error) =>
+    console.log "speech capture error:", error
+  emit: ->
     # emit the transcribe event to everyone else in the conference
     if Conf.user?.isPresenter then Conf.user.socket.emit "transcript-update", 
       transcript: @state
       room: Conf.room
       language: ($ "#transcript .language").val()
-
+  insertQuestion: (username, question) ->
+    questionElement = "<span class=\"question\">#{username}: #{question}</span>"
+    @transcript    += "\n\n#{questionElement}"
+    @state          = "#{@state}#{questionElement}" 
+    do @emit
     ($ "#transcript .target").html @state
-  handleTranscriptionError: (error) =>
-    console.log "speech capture error:", error
   translate: (text, language_from=en, language_to=en) ->
     data =
         format: "html"
@@ -86,7 +105,7 @@ class AVStream
       audio: yes
       video: yes
       broadcast: yes
-    @connection.direction     = "one-way"
+    @connection.direction     = "one-to-many"
     @connection.onstream      = @connect
     @connection.onstreamended = @disconnect
     do @connection.connect
@@ -97,8 +116,6 @@ class AVStream
       if Conf.user?.isPresenter
         ($ "#video .presenter").attr "src", stream.blobURL
         ($ "#video .presenter").prop "muted", true
-      # else
-      #   ($ "#video .participant").attr "src", stream.blobURL
     if stream.type is "remote" and !Conf.user.isPresenter
       unless @remoteStreamActive
         ($ "#video .presenter").attr "src", stream.mediaElement.src
@@ -117,25 +134,13 @@ class User
     @socket     = opts.socket
     @stream     = opts.stream
     @transcript = opts.transcript
-  giveFloor: ->
-    # this should be called by socket event when 
-    # presenter gives user the floor
-    @stream.connection.session.video = yes
-    @stream.connection.session.audio = yes
-    ($ "#video .participant").attr "src", stream.mediaElement.src
-    ($ "#video .participant").show()
-    ($ "#video .presenter").removeClass "standalone"
-    if Conf.activeParticipant then do Conf.activeParticipant.revokeFloor
-  revokeFloor: ->
-    @stream.connection.session.video = no
-    @stream.connection.session.audio = no
-    ($ "#video .participant").attr "src", ""
-    ($ "#video .participant").hide()
-    ($ "#video .presenter").addClass "standalone"
-  raiseHand: ->
+  askQuestion: (question_text) ->
+    # add question to transcript for all users
+  raiseHand: (question) ->
     console.log "requesting floor", @socket
     @socket.emit "floor-requested", 
-      id: @socket.socket.sessionid
+      id: @socket.socket.sessionid,
+      question: question
 
 # expose classes
 module.exports =

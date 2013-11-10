@@ -73,7 +73,7 @@ Conf.join = (data) -> socket.emit "requested-join", data
 
   ($ ".language").bind "change", ->
     Conf.user.transcript = new classes.Transcript
-    do Conf.user.transcript.capture
+    if Conf.user?.isPresesenter then do Conf.user.transcript.capture
 
   # adjust ui proportions
   ($ window).resize (event) ->

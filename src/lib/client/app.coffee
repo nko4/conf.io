@@ -80,6 +80,10 @@ Conf.join = (data) -> socket.emit "requested-join", data
     transcript   = ($ "#transcript").height()
     transTools   = ($ "#transcript .tools").height()
 
+    # scroll to bottom of transcription
+    ($ "#transcript .target").animate
+      scrollTop: ($ "#transcript .target")[0].scrollHeight, 1000
+
     ($ "#speakers").css
       height: "#{winHeight - header}px"
       width: "#{winWidth - participants}px"

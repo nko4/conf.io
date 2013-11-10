@@ -57,7 +57,7 @@ class Transcript
     interimTranscript = @capitalize interimTranscript
     @transcript       = "#{@capitalize @transcript}"
     @state            = "#{@transcript}<em>#{interimTranscript}</em>"
-
+    ($ window).trigger "resize"
     # inform clients of transcription
     do @emit
 

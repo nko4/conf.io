@@ -1,3 +1,3 @@
 // initialize server
 require('coffee-script');
-require('./lib/server.coffee');
+require('./src/lib/server.coffee');

@@ -12,9 +12,9 @@
       "email": "bitpix3l@gmail.com"
     }
   ],
-  "main": "src/index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

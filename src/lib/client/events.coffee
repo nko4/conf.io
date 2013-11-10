@@ -88,7 +88,7 @@ bind = (socket) ->
       # it should emit and translate automatically?
       question = data.question
       username = ($ "[data-id='#{data.id}'] .user-name").html()
-      Conf.user.transcript.insertQuestion username, question
+      if username then Conf.user.transcript.insertQuestion username, question
       
 
 

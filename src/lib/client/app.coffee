@@ -85,7 +85,7 @@ Conf.join = (data) -> socket.emit "requested-join", data
       width: "#{winWidth - participants}px"
       top: "#{header}px"
     ($ "#transcript .container").css
-      height: "#{transcript - transTools}px"
+      height: "#{transcript - transTools - 24}px"
   # forse adjustment on load
   ($ window).trigger "resize"
 

@@ -56,6 +56,12 @@ h1 {
 	float: left;
 }
 
+h1 a {
+	color: #9e005d;
+	text-decoration: none;
+	
+}
+
 h6 {
 	font-family: Raleway, Helvetica, sans-serif;
 	color: #000;
@@ -302,7 +308,7 @@ button.print {
 	right: 0;
 	width: 64px;
 	height: 64px;
-	margin: 12px;
+	margin: 12px 24px;
 	border-radius: 32px;
 	border: 1px solid rgba(0,0,0,0.2);
 	background-color: rgba(255,255,255,0.5);
